@@ -6,29 +6,44 @@
   object name, diet, weight, length, period
 */
 
+class dinosaur{
+  constructor(diet, weight, length, period){
+    this.diet = diet;
+    this.weight = weight;
+    this.length = length;
+    this.period = period;
+  }
+}
 // tyrannosaurus, carnivorous, 7000kg, 12m, Late Cretaceous
+const tyrannosaurus = new dinosaur("carnivorous", "7000kg", "12m", "Late Cretaceous");
+
 
 // stegosaurus, herbivorous, 2000kg, 9m, Late Jurassic
+const stegosaurus = new dinosaur("herbivorous", "2000kg", "9m", "Late Jurassic");
 
 // velociraptor, carnivorous, 15kg, 1.8m, Late Cretaceous
+const velociraptor = new dinosaur("carnivorous", "15kg", "1.8m", "Late Cretaceous");
 
 // Using your dinosaur objects, log answers to these questions:
 
 // How much did tyrannosaurus weigh?
-console.log();
+console.log(tyrannosaurus.weight);
 
 // What was the diet of a velociraptor?
-console.log();
+console.log(velociraptor.diet);
 
 // How long was a stegosaurus?
-console.log();
+console.log(stegosaurus.length);
 
 // What time period did tyrannosaurus live in?
-console.log();
+console.log(tyrannosaurus.period);
 
 
 // Create a new roar method for the tyrannosaurus.  When called, return "RAWERSRARARWERSARARARRRR!" Log the result.
-console.log();
+tyrannosaurus.roar = function(){
+  return "RAWERSRARARWERSARARARRRR!";
+};
+console.log(tyrannosaurus.roar());
 
 
 // ==== Arrays ====
@@ -51,20 +66,27 @@ const graduates = [
 /* Request 1: Create a new array called universities that contains all the universities in the graduates array. This will be an array of strings.
 
 Once you have the new array created, sort the universities alphabetically and log the result. */
-const universities = [];
+const universities = graduates.map(student => student.university);
+universities.sort(function(a,b){
+  if(a>b){
+    return 1;
+  } else if (a<b){
+    return -1;
+  } else if (a===b){
+    return 0;
+  }
+});
 console.log(universities);
 
 /* Request 2: Create a new array called contactInfo that contains both first name and email of each student. This will be an array of strings.
-
 The resulting contact information strings should have a space between the first name and the email, like this: 
 "Josh josh@example.com"
-
 Log the result of your new array. */
-const contactInfo = [];
+const contactInfo = graduates.map(student => `${student.first_name} ${student.email}`);
 console.log(contactInfo);
 
 /* Request 3: Find out how many universities have the string "Uni" included in their name. Create a new array called unisWithUni that contains them all. This will be an array of objects. Log the result. */
-const unisWithUni = [];
+const unisWithUni = graduates.filter(student => student.university.includes("Uni")).map(student=> student.university);
 console.log(unisWithUni);
 
 
@@ -91,6 +113,7 @@ The zoos want to display both the scientific name and the animal name in front o
 
 */
 const displayNames = [];
+zooAnimals.forEach(animal => displayNames.push(`Name: ${animal.animal_name}, Scientific: ${animal.scientific_name}`));
 console.log(displayNames);
 
 /* Request 2: .map()
@@ -99,7 +122,7 @@ The zoos need a list of all their animal's names (animal_name only) converted to
 
 */
 
-const lowCaseAnimalNames = [];
+const lowCaseAnimalNames = zooAnimals.map(animal => animal.animal_name.toLowerCase());
 console.log(lowCaseAnimalNames);
 
 /* Request 3: .filter() 
@@ -107,7 +130,7 @@ console.log(lowCaseAnimalNames);
 The zoos are concerned about animals with a lower population count. Using filter, create a new array of objects called lowPopulationAnimals which contains only the animals with a population less than 5.
 
 */
-const lowPopulationAnimals = [];
+const lowPopulationAnimals = zooAnimals.filter(animal => animal.population < 5);
 console.log(lowPopulationAnimals);
 
 /* Request 4: .reduce() 
@@ -115,7 +138,8 @@ console.log(lowPopulationAnimals);
 The zoos need to know their total animal population across the United States. Find the total population from all the zoos using the .reduce() method. Remember the reduce method takes two arguments: a callback (which itself takes two args), and an initial value for the count.
 
 */
-const populationTotal = 0;
+const animalPopulations = zooAnimals.map(animal => animal.population);
+const populationTotal = animalPopulations.reduce(((a,b) => a + b), 0);
 console.log(populationTotal);
 
 
